@@ -3,6 +3,9 @@ from sqlalchemy.orm import declarative_base
 
 Base = declarative_base()
 
+def utcnow():
+    return func.timezone('UTC', func.utcnow())
+
 class AbsId(Base):
     __abstract__ = True
 
@@ -15,5 +18,5 @@ class AbsId(Base):
 class AbsCreated(Base):
     __abstract__ = True
 
-    created_at = Column(DateTime, server_default=func.now(), nullable=False, index=True)
-    updated_at = Column(DateTime, server_default=func.now(), onupdate=func.now(), nullable=False, index=True)
+    created_at = Column(DateTime, server_default=utcnow(), nullable=False, index=True)
+    updated_at = Column(DateTime, server_default=utcnow(), onupdate=utcnow(), nullable=False, index=True)
