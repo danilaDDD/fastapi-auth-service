@@ -1,4 +1,5 @@
 import os
+from functools import lru_cache
 from typing import Optional
 
 from dotenv import dotenv_values
@@ -17,6 +18,11 @@ class Settings(BaseSettings):
     DB_PORT: str
     DB_PASSWORD: str
 
+    SECRET_KEY: str
+    ALGORITHM: str = Field(default="HS256")
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = Field(default=15)
+    REFRESH_TOKEN_EXPIRE_HOURS: int = Field(default=7)
+
     def get_database_url(self) -> str:
         return f"{self.DB_PREFIX}://{self.DB_USER}:{self.DB_PASSWORD}@{self.DB_HOST}:{self.DB_PORT}/{self.DB_NAME}"
 
@@ -27,6 +33,8 @@ class Settings(BaseSettings):
         env_file_encoding = 'utf-8',
     )
 
+
+@lru_cache(maxsize=100)
 def load_settings() -> Settings:
     env = os.getenv('ENV', 'dev')
     env_path = get_env_file_path(env=env)
