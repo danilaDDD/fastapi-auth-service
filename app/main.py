@@ -1,3 +1,7 @@
 from fastapi import FastAPI
 
-app = FastAPI()
+def main():
+    app = FastAPI()
+
+if __name__ == "__main__":
+    main()

@@ -11,6 +11,7 @@ from settings.path import get_env_file_path
 
 class Settings(BaseSettings):
     ENV: str
+    DEBUG: bool = Field(default=False)
     DB_PREFIX: str
     DB_NAME: str
     DB_USER: str

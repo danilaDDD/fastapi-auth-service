@@ -1,8 +1,9 @@
+import asyncio
 import os
 
 import pytest
 
-from settings.settings import Settings
+from settings.settings import Settings, load_settings
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -12,6 +13,5 @@ def setup():
 
 
 @pytest.fixture(scope="session")
-def settings() -> 'Settings':
-    from settings.settings import load_settings
+def settings() -> Settings:
     return load_settings()

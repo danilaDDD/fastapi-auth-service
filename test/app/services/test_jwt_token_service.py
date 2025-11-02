@@ -4,7 +4,6 @@ from jwt import InvalidTokenError
 
 from app.services.jwt_token_service import JWTTokenService
 from app.utils.datetime_utils import utcnow
-from settings.settings import Settings
 from test.conftest import *
 
 
