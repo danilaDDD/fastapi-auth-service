@@ -1,11 +1,11 @@
 import pytest_asyncio
+import pytest
 from sqlalchemy.exc import SQLAlchemyError
 
 from app.models.models import User
 from app.repositories.user_repository import UserRepository
+from app.testutils.user_utils import UserGenerator
 from db.connection import session_factory
-
-from test.conftest import *
 
 
 class TestUserRepository:
@@ -17,16 +17,6 @@ class TestUserRepository:
         assert source_user.first_name == saved_user.first_name
         assert source_user.last_name == saved_user.last_name
         assert source_user.second_name == saved_user.second_name
-
-    @classmethod
-    def get_user(cls, i) -> User:
-        return User(
-                login=f"user{i}",
-                hashed_password="hashedpassword",
-                first_name=f"First{i}",
-                last_name=f"Last{i}",
-                second_name=f"Second{i}"
-            )
 
     @pytest_asyncio.fixture(scope="function", autouse=True)
     async def setup(self) -> None:
@@ -40,7 +30,7 @@ class TestUserRepository:
     async def test_create_1_user_should_ok(self) -> None:
         async with session_factory() as session:
             user_repository = UserRepository(session)
-            new_user = self.get_user(1)
+            new_user = UserGenerator.generate_user(1)
             saved_user = await user_repository.save(new_user)
             assert saved_user is not None
             self.assert_user(new_user, saved_user)
@@ -57,7 +47,7 @@ class TestUserRepository:
         async with session_factory() as session:
             user_repository = UserRepository(session)
             users = [
-                self.get_user(i)
+                UserGenerator.generate_user(i)
                 for i in range(5)
             ]
             for user in users:
@@ -72,7 +62,7 @@ class TestUserRepository:
 
     @pytest.mark.asyncio
     async def test_delete_1_user_should_ok(self) -> None:
-        new_user = self.get_user(1)
+        new_user = UserGenerator.generate_user(1)
 
         async with session_factory() as session:
             user_repository = UserRepository(session)

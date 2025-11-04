@@ -1,26 +1,35 @@
+import pytest
 import pytest_asyncio
 
-from app.models.models import User
+from app.testutils.user_utils import UserGenerator
+from db.connection import session_factory
 from db.session_manager import SessionManager
 
-from test.conftest import *
-from test.session_manager.conftest import session_manager
+
+@pytest.fixture(scope="module")
+def session_manager() -> SessionManager:
+    return SessionManager(session_factory=session_factory)
 
 
 class TestSessionManager:
     @pytest_asyncio.fixture(scope="function", autouse=True)
     async def setup(self, session_manager: SessionManager) -> None:
         async with session_manager.start_with_commit() as sm:
-            await sm.user_repository.delete_all()
+            await sm.users.delete_all()
 
-    @pytest.mark.skip(reason="Needs async repository methods")
+
     @pytest.mark.asyncio
-    async def test_do_with_commit_should_successfully(self, session_manager: SessionManager) -> None:
+    async def test_create_user_commit_should_ok(self, session_manager: SessionManager) -> None:
         async with session_manager.start_with_commit() as sm:
-            user = User(login="testuser", hashed_password="jkjkgjfjfg",
-                        first_name="Test", last_name="User", second_name="Test")
-            saved_user = sm.user_repository.save(user)
+            user = UserGenerator.generate_user(1)
+
+            saved_user = await sm.users.save(user)
 
             assert saved_user is not None
             assert saved_user.id is not None
+
+        async with session_manager.start_without_commit() as sm:
+            all_users = await sm.users.get_all()
+            assert len(all_users) == 1
+
 

@@ -35,7 +35,7 @@ class Settings(BaseSettings):
     )
 
 
-@lru_cache(maxsize=100)
+
 def load_settings() -> Settings:
     env = os.getenv('ENV', 'dev')
     env_path = get_env_file_path(env=env)

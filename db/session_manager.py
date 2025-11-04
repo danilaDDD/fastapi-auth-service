@@ -15,7 +15,7 @@ class SessionManager:
         self._session = None
 
     @asynccontextmanager
-    async def start_with_commit(self) -> AsyncGenerator['SessionManager', Any]:
+    async def start_with_commit(self) -> AsyncGenerator["SessionManager", Any]:
         async with self._session_factory() as session:
             try:
                 self._session = session
@@ -25,15 +25,15 @@ class SessionManager:
                 await self._session.rollback()
                 raise e
 
-    @contextmanager
-    async def start_without_commit(self) -> AsyncGenerator['SessionManager', Any]:
+    @asynccontextmanager
+    async def start_without_commit(self) -> AsyncGenerator["SessionManager", Any]:
         async with self._session_factory() as session:
             self._session = session
             yield self
 
 
     @property
-    def user_repository(self) -> UserRepository:
+    def users(self) -> UserRepository:
         return UserRepository(self._session)
 
 
