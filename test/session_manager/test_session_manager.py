@@ -1,35 +1,59 @@
+import os
+
 import pytest
-import pytest_asyncio
+from mock.mock import AsyncMock
 
 from app.testutils.user_utils import UserGenerator
-from db.connection import session_factory
 from db.session_manager import SessionManager
-
-
-@pytest.fixture(scope="module")
-def session_manager() -> SessionManager:
-    return SessionManager(session_factory=session_factory)
+from test.session_manager.mock import SessionFactoryMock
 
 
 class TestSessionManager:
-    @pytest_asyncio.fixture(scope="function", autouse=True)
-    async def setup(self, session_manager: SessionManager) -> None:
+    @pytest.mark.asyncio
+    async def test_session_with_commit(self, session_manager: SessionManager) -> None:
         async with session_manager.start_with_commit() as sm:
-            await sm.users.delete_all()
+            session: AsyncMock = sm.get_session()
+
+        session.commit.assert_awaited_once()
+        session.rollback.assert_not_awaited()
+        session.close.assert_awaited_once()
+
+    @pytest.mark.asyncio
+    async def test_with_rollback_on_exception(self, session_manager: SessionManager) -> None:
+        try:
+            async with session_manager.start_with_commit() as sm:
+                raise Exception("Test exception to trigger rollback")
+        except Exception:
+            pass
+        finally:
+            session: AsyncMock = session_manager.get_session()
+
+        session.commit.assert_not_awaited()
+        session.rollback.assert_awaited_once()
+        session.close.assert_awaited_once()
+
+    @pytest.mark.asyncio
+    async def test_session_without_commit(self, session_manager: SessionManager) -> None:
+        async with session_manager.start_without_commit() as sm:
+            session: AsyncMock = sm.get_session()
+
+        session.commit.assert_not_awaited()
+        session.rollback.assert_not_awaited()
+        session.close.assert_awaited_once()
 
 
     @pytest.mark.asyncio
-    async def test_create_user_commit_should_ok(self, session_manager: SessionManager) -> None:
-        async with session_manager.start_with_commit() as sm:
-            user = UserGenerator.generate_user(1)
+    async def test_session_without_commit_when_exception_should_close(self, session_manager: SessionManager) -> None:
+        try:
+            async with session_manager.start_without_commit() as sm:
+                raise Exception("Test exception to check close")
+        except Exception:
+            pass
+        finally:
+            session: AsyncMock = session_manager.get_session()
 
-            saved_user = await sm.users.save(user)
-
-            assert saved_user is not None
-            assert saved_user.id is not None
-
-        async with session_manager.start_without_commit() as sm:
-            all_users = await sm.users.get_all()
-            assert len(all_users) == 1
+        session.commit.assert_not_awaited()
+        session.rollback.assert_not_awaited()
+        session.close.assert_awaited_once()
 
 
