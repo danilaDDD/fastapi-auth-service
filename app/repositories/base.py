@@ -3,8 +3,6 @@ from typing import Sequence
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from db.connection import session_factory
-
 
 class BaseRepository:
     model = None
