@@ -11,3 +11,10 @@ class User(AbsId, AbsCreated):
     first_name = Column(String(50), nullable=False)
     last_name = Column(String(50), nullable=False)
     second_name = Column(String(50), nullable=False)
+
+
+class PrimaryToken(AbsId, AbsCreated):
+    __tablename__ = 'primary_tokens'
+
+    token = Column(String(255), nullable=False, index=True, unique=True)
+    name = Column(String(100), nullable=False)
