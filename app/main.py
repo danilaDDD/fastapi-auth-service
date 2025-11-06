@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 
-def main():
-    app = FastAPI()
+from app.routers.user_router import user_router
+app = FastAPI()
+app.include_router(user_router)
 
-if __name__ == "__main__":
-    main()
+
