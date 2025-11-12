@@ -3,10 +3,12 @@ from typing import Dict, Tuple, Optional, Any
 import secrets
 from datetime import     timedelta
 
+from fastapi import Depends
 from jwt import InvalidTokenError
 
+from app.schemes.schemes import Token
 from app.utils.datetime_utils import utcnow
-from settings.settings import Settings
+from settings.settings import Settings, load_settings
 
 
 class JWTTokenService:
@@ -18,32 +20,45 @@ class JWTTokenService:
         self.settings = settings
 
 
-    def generate_access_token(self, user_id: int, additional_data: Dict = None) -> str:
+    def generate_access_token(self, user_id: int, additional_data: Dict = None) -> Token:
+        now = utcnow()
+        expired_at = now + self.refresh_token_expires
+
         payload = {
             'user_id': user_id,
             'type': 'access',
-            'exp': utcnow() + self.access_token_expires,
-            'iat': utcnow(),
+            'exp': expired_at,
+            'iat': now,
             'jti': secrets.token_urlsafe(16)  # Unique token ID
         }
 
         if additional_data:
             payload.update(additional_data)
 
-        return jwt.encode(payload, self.secret_key, algorithm=self.algorithm)
+        return Token(
+            token=jwt.encode(payload, self.secret_key, algorithm=self.algorithm),
+            expired_at=expired_at,
+        )
 
-    def generate_refresh_token(self, user_id: int) -> str:
+
+    def generate_refresh_token(self, user_id: int) -> Token:
+        now = utcnow()
+        expired_at = now + self.refresh_token_expires
+
         payload = {
             'user_id': user_id,
             'type': 'refresh',
-            'exp': utcnow() + self.refresh_token_expires,
-            'iat': utcnow(),
+            'exp': expired_at,
+            'iat': now,
             'jti': secrets.token_urlsafe(16)
         }
 
-        return jwt.encode(payload, self.secret_key, algorithm=self.algorithm)
+        return Token(
+            token=jwt.encode(payload, self.secret_key, algorithm=self.algorithm),
+            expired_at=expired_at
+        )
 
-    def generate_tokens(self, user_id: int, additional_data: Dict = None) -> Tuple[str, str]:
+    def generate_tokens(self, user_id: int, additional_data: Dict = None) -> Tuple[Token, Token]:
         access_token = self.generate_access_token(user_id, additional_data)
         refresh_token = self.generate_refresh_token(user_id)
 
@@ -70,3 +85,5 @@ class JWTTokenService:
         return new_access_token
 
 
+def get_jwt_token_service(settings = Depends(load_settings, use_cache=True)) -> JWTTokenService:
+    return JWTTokenService(settings)

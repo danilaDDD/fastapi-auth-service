@@ -18,6 +18,7 @@ class Settings(BaseSettings):
     DB_HOST: str
     DB_PORT: str
     DB_PASSWORD: str
+    BASE_URL: str = ""
 
     SECRET_KEY: str
     ALGORITHM: str = Field(default="HS256")
