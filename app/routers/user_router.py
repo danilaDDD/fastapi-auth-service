@@ -25,10 +25,9 @@ user_router = APIRouter(
                         },
                 }
 )
-async def create_user(request: CreateUserRequest,
+async def create_user(request_body: CreateUserRequest,
                       response: Response,
                       api_key: str = Depends(get_api_key),
                       user_rest_service: UserRestService = Depends(get_user_rest_service)) -> CreateUserResponse:
-
     response.status_code = status.HTTP_201_CREATED
-    return await user_rest_service.create_user(request)
+    return await user_rest_service.create_user(request_body)
