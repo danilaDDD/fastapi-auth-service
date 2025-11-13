@@ -73,7 +73,7 @@ class JWTTokenService:
         return payload
 
 
-    def refresh_access_token(self, refresh_token: str, additional_data: Dict = None) -> str:
+    def refresh_access_token(self, refresh_token: str, additional_data: Dict = None) -> Token:
         payload = self.verify_token(refresh_token, "refresh")
 
         if not payload:

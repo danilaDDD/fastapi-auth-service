@@ -24,10 +24,7 @@ class TestCreateUserRequest:
         self.client = client
         self.settings = settings
         self.password_service = password_service
-        self.asserts = Asserts(secret_key=settings.SECRET_KEY,
-                               algorithm=settings.ALGORITHM,
-                               access_token_expire_minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES,
-                               refresh_token_expire_hours=settings.REFRESH_TOKEN_EXPIRE_HOURS)
+        self.asserts = Asserts.from_settings(settings)
         yield
 
 

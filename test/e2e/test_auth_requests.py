@@ -13,10 +13,7 @@ class TestGetAccessToken:
         self.primary_token = primary_token_str
         self.password_service = password_service
         self.settings = settings
-        self.asserts = Asserts(secret_key=settings.SECRET_KEY,
-                               algorithm=settings.ALGORITHM,
-                               access_token_expire_minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES,
-                               refresh_token_expire_hours=settings.REFRESH_TOKEN_EXPIRE_HOURS)
+        self.asserts = Asserts.from_settings(settings)
         yield
 
     @pytest.fixture(scope="function")
@@ -101,3 +98,50 @@ class TestGetAccessToken:
     @classmethod
     def get_request_body(cls) -> dict:
         return {"login": "testuser", "password": "TestPassword123!"}
+
+
+class TestRefreshAccessToken:
+    @pytest.fixture(autouse=True, scope="function")
+    def setup(self, client, session_manager, primary_token_str,
+              password_service, settings, jwt_token_service):
+
+        self.client = client
+        self.session_manager = session_manager
+        self.primary_token = primary_token_str
+        self.password_service = password_service
+        self.settings = settings
+        self.asserts = Asserts.from_settings(settings)
+        self.jwt_token_service = jwt_token_service
+        yield
+
+
+    @pytest.fixture(scope="function")
+    def request_kwargs(self, primary_token_str) -> dict:
+        return {"url": "/tokens/refresh",
+                "headers": {"Content-Type": "application/json",
+                            "X-Api-Key": primary_token_str}
+                }.copy()
+
+
+    @pytest.mark.asyncio
+    async def test_with_valid_should_success(self, request_kwargs):
+        async with self.session_manager.start_with_commit() as session_manager:
+            user = UserGenerator.generate_user(1)
+            saved_user = await session_manager.users.save(user)
+            user_id = saved_user.id
+
+        tokens = self.jwt_token_service.generate_tokens(user_id)
+        access_token = tokens[0].token
+        refresh_token = tokens[1].token
+
+        request = {"refresh_token": refresh_token}
+        request_kwargs.update(json=request)
+        response = self.client.post(**request_kwargs)
+
+        assert response.status_code == 200
+        body = response.json()
+        new_access_token = body["token"]
+        self.asserts.assert_token(user_id, new_access_token, "access")
+        assert new_access_token != access_token
+
+

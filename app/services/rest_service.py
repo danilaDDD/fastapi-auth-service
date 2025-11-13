@@ -99,6 +99,11 @@ class TokensRestService(BaseDBService):
                 refresh_token=refresh_token
             )
 
+
+    async def refresh_tokens(self, refresh_token: str) -> Token:
+        return self.jwt_token_service.refresh_access_token(refresh_token)
+
+
 def get_tokens_rest_service(
         session_manager: SessionManager = Depends(get_session_manager, use_cache=True),
         jwt_token_service: JWTTokenService = Depends(get_jwt_token_service, use_cache=True),

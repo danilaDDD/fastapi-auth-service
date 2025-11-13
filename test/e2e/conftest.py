@@ -6,6 +6,7 @@ from starlette.testclient import TestClient
 
 from app.main import app
 from app.models.models import PrimaryToken
+from app.services.jwt_token_service import JWTTokenService
 from db.connection import create_session_factory
 from db.session_manager import SessionManager
 
@@ -37,6 +38,11 @@ def primary_token_str() -> str:
 def password_service():
     from app.services.password_service import PasswordService
     return PasswordService()
+
+
+@pytest.fixture(scope="module")
+def jwt_token_service(settings) -> JWTTokenService:
+    return JWTTokenService(settings)
 
 
 @pytest_asyncio.fixture(scope="function", autouse=True)

@@ -6,6 +6,15 @@ from app.utils.datetime_utils import utcnow, to_utc
 
 
 class Asserts:
+    @classmethod
+    def from_settings(cls, settings):
+        return cls(
+            secret_key=settings.SECRET_KEY,
+            algorithm=settings.ALGORITHM,
+            access_token_expire_minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES,
+            refresh_token_expire_hours=settings.REFRESH_TOKEN_EXPIRE_HOURS
+        )
+
     def __init__(self, secret_key: str, algorithm: str,
                  access_token_expire_minutes: int,
                  refresh_token_expire_hours: int):
