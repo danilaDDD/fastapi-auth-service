@@ -1,5 +1,6 @@
 from pydantic import BaseModel, ConfigDict
 
+from app.schemes.responses.base import BaseTokensResponse
 from app.schemes.schemes import Token
 
 
@@ -16,6 +17,5 @@ class BaseUserResponse(BaseModel):
     )
 
 
-class CreateUserResponse(BaseUserResponse):
-    access_token: Token
-    refresh_token: Token
+class CreateUserResponse(BaseUserResponse, BaseTokensResponse):
+    pass

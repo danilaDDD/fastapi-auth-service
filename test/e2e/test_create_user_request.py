@@ -8,6 +8,7 @@ from starlette.testclient import TestClient
 
 from app.models.models import PrimaryToken, User
 from app.schemes.responses.error_responses import BadRequestResponse
+from app.testutils.asserts import Asserts
 from app.utils.datetime_utils import utcnow, to_utc
 from db.session_manager import SessionManager
 from settings.settings import Settings
@@ -23,6 +24,10 @@ class TestCreateUserRequest:
         self.client = client
         self.settings = settings
         self.password_service = password_service
+        self.asserts = Asserts(secret_key=settings.SECRET_KEY,
+                               algorithm=settings.ALGORITHM,
+                               access_token_expire_minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES,
+                               refresh_token_expire_hours=settings.REFRESH_TOKEN_EXPIRE_HOURS)
         yield
 
 
@@ -57,8 +62,8 @@ class TestCreateUserRequest:
             assert len(users) == 1
             user = users[0]
 
-            self.assert_token(user.id, access_token, "access")
-            self.assert_token(user.id, refresh_token, "refresh")
+            self.asserts.assert_token(user.id, access_token, "access")
+            self.asserts.assert_token(user.id, refresh_token, "refresh")
 
 
     @pytest.mark.asyncio

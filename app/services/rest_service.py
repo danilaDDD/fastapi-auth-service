@@ -3,7 +3,9 @@ from datetime import datetime, timedelta
 from fastapi import Depends, HTTPException, status
 
 from app.models.models import User
+from app.schemes.requests.auth_requests import TokensRequest
 from app.schemes.requests.user_requests import CreateUserRequest
+from app.schemes.responses.token_responses import TokensResponse
 from app.schemes.responses.user_responses import CreateUserResponse
 from app.schemes.schemes import Token
 from app.services import jwt_token_service
@@ -67,3 +69,40 @@ def get_user_rest_service(
     ) -> UserRestService:
 
     return UserRestService(password_service, session_manager, jwt_token_service, settings)
+
+
+class TokensRestService(BaseDBService):
+    def __init__(self,
+                 session_manager: SessionManager,
+                 jwt_token_service: JWTTokenService,
+                 password_service: PasswordService):
+        super().__init__(session_manager)
+        self.jwt_token_service = jwt_token_service
+        self.password_service = password_service
+
+
+    async def get_tokens(self, request: TokensRequest) -> TokensResponse:
+
+        async with self.session_manager.start_without_commit() as session_manager:
+            users = await session_manager.users.find_by_login(request.login)
+            users = [u for u in users if self.password_service.verify(request.password, u.hashed_password)]
+
+            if len(users) == 0:
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                                    detail="Invalid login or password")
+
+            user = users[0]
+            access_token, refresh_token = self.jwt_token_service.generate_tokens(user.id)
+
+            return TokensResponse(
+                access_token=access_token,
+                refresh_token=refresh_token
+            )
+
+def get_tokens_rest_service(
+        session_manager: SessionManager = Depends(get_session_manager, use_cache=True),
+        jwt_token_service: JWTTokenService = Depends(get_jwt_token_service, use_cache=True),
+        password_service: PasswordService = Depends(get_password_service, use_cache=True),
+    ) -> TokensRestService:
+
+    return TokensRestService(session_manager, jwt_token_service, password_service)

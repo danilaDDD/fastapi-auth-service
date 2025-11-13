@@ -1,9 +1,9 @@
 from pydantic import BaseModel, Field
 
+from app.schemes.requests.base import BaseAuthRequest
 
-class CreateUserRequest(BaseModel):
-    login: str = Field(..., min_length=3, max_length=50)
-    password: str = Field(..., min_length=6, max_length=50)
+
+class CreateUserRequest(BaseAuthRequest):
     first_name: str = Field(..., min_length=3, max_length=50)
     last_name: str = Field(..., min_length=3, max_length=50)
     second_name: str = Field(..., min_length=3, max_length=50)

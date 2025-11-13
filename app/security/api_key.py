@@ -5,9 +5,9 @@ from app.services.check_primary_token_service import CheckPrimaryTokenService, g
 
 api_key_header = APIKeyHeader(name="X-API-KEY", auto_error=True)
 
-async def get_api_key(api_key: str = Security(api_key_header),
-                      check_primary_token_service: CheckPrimaryTokenService = Depends(get_check_primary_token_service)
-                      ) -> str:
+async def valid_primary_token(api_key: str = Security(api_key_header),
+                              check_primary_token_service: CheckPrimaryTokenService = Depends(get_check_primary_token_service)
+                              ) -> str:
 
     if not await check_primary_token_service.find_primary_token(api_key):
         from fastapi import HTTPException
