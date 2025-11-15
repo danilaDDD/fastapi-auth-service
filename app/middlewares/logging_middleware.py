@@ -10,7 +10,7 @@ class LoggingMiddleware(BaseHTTPMiddleware):
             response = await call_next(request)
             return response
         except Exception as e:
-            if os.environ["ENV"] != "test":
+            if os.environ.get("ENV", "dev") != "test":
                 logger = request.app.state.logger
                 await logger.error(f"Unhandled exception: {e}", exc_info=True)
             raise e
