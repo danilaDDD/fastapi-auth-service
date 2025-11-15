@@ -10,7 +10,5 @@ app.include_router(auth_router)
 
 app.add_middleware(LoggingMiddleware)
 
-@app.on_event("startup")
-async def startup_event():
-    initialize_logger(app)
+initialize_logger(app)
 
