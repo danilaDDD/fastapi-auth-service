@@ -125,10 +125,7 @@ class TestRefreshAccessToken:
 
     @pytest.mark.asyncio
     async def test_with_valid_should_success(self, request_kwargs):
-        async with self.session_manager.start_with_commit() as session_manager:
-            user = UserGenerator.generate_user(1)
-            saved_user = await session_manager.users.save(user)
-            user_id = saved_user.id
+        user_id = await self.save_user()
 
         tokens = self.jwt_token_service.generate_tokens(user_id)
         access_token = tokens[0].token
@@ -143,5 +140,54 @@ class TestRefreshAccessToken:
         new_access_token = body["token"]
         self.asserts.assert_token(user_id, new_access_token, "access")
         assert new_access_token != access_token
+
+
+    @pytest.mark.asyncio
+    async def test_with_invalid_primary_token_should_fail(self, request_kwargs):
+        user_id = await self.save_user()
+
+        tokens = self.jwt_token_service.generate_tokens(user_id)
+        refresh_token = tokens[1].token
+
+        request = {"refresh_token": refresh_token}
+        request_kwargs.pop("headers")
+        request_kwargs.update(json=request)
+        response = self.client.post(**request_kwargs)
+
+        assert response.status_code == 403
+        assert len(response.json()["detail"]) > 0
+
+
+    @pytest.mark.asyncio
+    async def test_with_invalid_refresh_token_should_fail(self, request_kwargs):
+        request = {"refresh_token": "invalidtoken"}
+        request_kwargs.update(json=request)
+        response = self.client.post(**request_kwargs)
+
+        assert response.status_code == 400
+        assert len(response.json()["detail"]) > 0
+
+
+    @pytest.mark.asyncio
+    @pytest.mark.parametrize("invalid_request",
+    [
+        {},
+        {"refresh_token": ""},
+        {"refresh_token": None},
+        {"invalid_field": "some_value"}
+    ]
+                             )
+    async def test_with_invalid_body_should_fail(self, request_kwargs, invalid_request):
+        request_kwargs.update(json=invalid_request)
+        response = self.client.post(**request_kwargs)
+
+        assert  response.status_code in (400, 422)
+        assert len(response.json()["detail"]) > 0
+
+    async def save_user(self) -> int:
+        async with self.session_manager.start_with_commit() as session_manager:
+            user = UserGenerator.generate_user(1)
+            saved_user = await session_manager.users.save(user)
+            return saved_user.id
 
 

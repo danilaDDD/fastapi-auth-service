@@ -1,4 +1,5 @@
-from fastapi import APIRouter, status, Response, Depends
+from fastapi import APIRouter, status, Response, Depends, HTTPException
+from jwt import DecodeError
 
 from app.schemes.requests.auth_requests import TokensRequest, RefreshTokensRequest
 from app.schemes.responses.token_responses import TokensResponse
@@ -42,6 +43,12 @@ async def refresh_tokens(request: RefreshTokensRequest,
                          api_key = Depends(valid_primary_token),
                          tokens_rest_service: TokensRestService = Depends(get_tokens_rest_service)) \
         -> Token:
+    try:
+        response.status_code = status.HTTP_200_OK
+        return await tokens_rest_service.refresh_tokens(request.refresh_token)
 
-    response.status_code = status.HTTP_200_OK
-    return await tokens_rest_service.refresh_tokens(request.refresh_token)
+    except DecodeError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Invalid refresh token",
+        ) from e
