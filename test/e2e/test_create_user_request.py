@@ -2,12 +2,9 @@ from datetime import timedelta, datetime
 
 import jwt
 import pytest
-import pytest_asyncio
-from httpx import AsyncClient
 from starlette.testclient import TestClient
 
-from app.models.models import PrimaryToken, User
-from app.schemes.responses.error_responses import BadRequestResponse
+from app.models.models import User
 from app.testutils.asserts import Asserts
 from app.utils.datetime_utils import utcnow, to_utc
 from db.session_manager import SessionManager
@@ -18,22 +15,15 @@ class TestCreateUserRequest:
 
     @pytest.fixture(scope="function", autouse=True)
     def setup(self, primary_token_str: str, session_manager: SessionManager,
-              client: TestClient, settings: Settings, password_service):
+              client: TestClient, settings: Settings, password_service, request_kwargs):
         self.primary_token = primary_token_str
         self.session_manager = session_manager
         self.client = client
         self.settings = settings
         self.password_service = password_service
         self.asserts = Asserts.from_settings(settings)
+        request_kwargs["url"] = "/users/"
         yield
-
-
-    @pytest.fixture(scope="function")
-    def request_kwargs(self, primary_token_str) -> dict:
-        return {"url":"/users/",
-                    "headers":{"Content-Type": "application/json",
-                               "X-Api-Key": primary_token_str}
-                }.copy()
 
 
     @pytest.mark.asyncio
@@ -87,8 +77,7 @@ class TestCreateUserRequest:
         request_kwargs.update(json=request)
         response = self.client.post(**request_kwargs)
 
-        assert response.status_code == 400
-        assert len(response.json()["detail"]) > 0
+        self.asserts.assert_error_response(response, 400)
 
 
     @pytest.mark.asyncio
@@ -98,8 +87,7 @@ class TestCreateUserRequest:
         request_kwargs.update(json=request)
         response = self.client.post(**request_kwargs)
 
-        assert response.status_code == 403
-        assert len(response.json()["detail"]) > 0
+        self.asserts.assert_error_response(response, 403)
 
 
     @pytest.mark.asyncio
@@ -109,8 +97,7 @@ class TestCreateUserRequest:
         request_kwargs.update(json=request)
         response = self.client.post(**request_kwargs)
 
-        assert response.status_code == 401
-        assert len(response.json()["detail"]) > 0
+        self.asserts.assert_error_response(response, 401)
 
 
     @pytest.mark.parametrize("invalid_request",
@@ -129,8 +116,7 @@ class TestCreateUserRequest:
         request_kwargs.update(json=invalid_request)
         response = self.client.post(**request_kwargs)
 
-        assert response.status_code == 422
-        assert len(response.json()["detail"]) > 0
+        self.asserts.assert_error_response(response, 422)
 
 
     def assert_token(self, user_id, token, type: str):

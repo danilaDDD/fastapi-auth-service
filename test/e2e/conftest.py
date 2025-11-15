@@ -45,6 +45,14 @@ def jwt_token_service(settings) -> JWTTokenService:
     return JWTTokenService(settings)
 
 
+@pytest.fixture(scope="function")
+def request_kwargs(primary_token_str) -> dict:
+    return {
+                "headers":{"Content-Type": "application/json",
+                           "X-Api-Key": primary_token_str}
+            }.copy()
+
+
 @pytest_asyncio.fixture(scope="function", autouse=True)
 async def clean_db_before_test(session_manager: SessionManager, primary_token_str: str):
     async with session_manager.start_with_commit() as open_session_manager:
@@ -53,7 +61,6 @@ async def clean_db_before_test(session_manager: SessionManager, primary_token_st
 
     async with session_manager.start_with_commit() as open_session_manager:
         primary_token = PrimaryToken(name="test", token=primary_token_str)
-        obj = await open_session_manager.primary_tokens.save(primary_token)
-        assert obj is not None
+        await open_session_manager.primary_tokens.save(primary_token)
 
     yield

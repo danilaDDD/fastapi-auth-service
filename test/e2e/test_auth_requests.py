@@ -7,21 +7,15 @@ from app.testutils.user_utils import UserGenerator
 
 class TestGetAccessToken:
     @pytest.fixture(autouse=True, scope="function")
-    def setup(self, client, session_manager, primary_token_str, password_service, settings):
+    def setup(self, client, session_manager, primary_token_str, password_service, settings, request_kwargs):
         self.client = client
         self.session_manager = session_manager
         self.primary_token = primary_token_str
         self.password_service = password_service
         self.settings = settings
         self.asserts = Asserts.from_settings(settings)
+        request_kwargs["url"] = "/tokens/"
         yield
-
-    @pytest.fixture(scope="function")
-    def request_kwargs(self, primary_token_str) -> dict:
-        return {"url":"/tokens/",
-                    "headers":{"Content-Type": "application/json",
-                               "X-Api-Key": primary_token_str}
-                }.copy()
 
 
     @pytest.mark.asyncio
@@ -60,8 +54,7 @@ class TestGetAccessToken:
 
         response = self.client.post(**request_kwargs)
 
-        assert response.status_code == 403
-        assert len(response.json()["detail"]) > 0
+        self.asserts.assert_error_response(response, 403)
 
 
     @pytest.mark.asyncio
@@ -81,8 +74,7 @@ class TestGetAccessToken:
 
         request_kwargs.update(json=request)
         response = self.client.post(**request_kwargs)
-        assert response.status_code == 401
-        assert len(response.json()["detail"]) > 0
+        self.asserts.assert_error_response(response, 401)
 
 
     @pytest.mark.asyncio
@@ -91,8 +83,7 @@ class TestGetAccessToken:
 
         request_kwargs.update(json=request)
         response = self.client.post(**request_kwargs)
-        assert response.status_code == 401
-        assert len(response.json()["detail"]) > 0
+        self.asserts.assert_error_response(response, 401)
 
 
     @classmethod
@@ -103,7 +94,7 @@ class TestGetAccessToken:
 class TestRefreshAccessToken:
     @pytest.fixture(autouse=True, scope="function")
     def setup(self, client, session_manager, primary_token_str,
-              password_service, settings, jwt_token_service):
+              password_service, settings, jwt_token_service, request_kwargs):
 
         self.client = client
         self.session_manager = session_manager
@@ -112,15 +103,8 @@ class TestRefreshAccessToken:
         self.settings = settings
         self.asserts = Asserts.from_settings(settings)
         self.jwt_token_service = jwt_token_service
+        request_kwargs["url"] = "/tokens/refresh/"
         yield
-
-
-    @pytest.fixture(scope="function")
-    def request_kwargs(self, primary_token_str) -> dict:
-        return {"url": "/tokens/refresh",
-                "headers": {"Content-Type": "application/json",
-                            "X-Api-Key": primary_token_str}
-                }.copy()
 
 
     @pytest.mark.asyncio
@@ -137,7 +121,8 @@ class TestRefreshAccessToken:
 
         assert response.status_code == 200
         body = response.json()
-        new_access_token = body["token"]
+        new_access_token = body.get("token")
+        assert new_access_token is not None
         self.asserts.assert_token(user_id, new_access_token, "access")
         assert new_access_token != access_token
 
@@ -154,8 +139,7 @@ class TestRefreshAccessToken:
         request_kwargs.update(json=request)
         response = self.client.post(**request_kwargs)
 
-        assert response.status_code == 403
-        assert len(response.json()["detail"]) > 0
+        self.asserts.assert_error_response(response, 403)
 
 
     @pytest.mark.asyncio
