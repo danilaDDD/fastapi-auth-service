@@ -5,7 +5,7 @@ import pytest
 from starlette.testclient import TestClient
 
 from app.models.models import User
-from app.testutils.asserts import Asserts
+from app.testutils.asserts import AssertsToken
 from app.utils.datetime_utils import utcnow, to_utc
 from db.session_manager import SessionManager
 from settings.settings import Settings
@@ -15,22 +15,25 @@ class TestCreateUserRequest:
 
     @pytest.fixture(scope="function", autouse=True)
     def setup(self, primary_token_str: str, session_manager: SessionManager,
-              client: TestClient, settings: Settings, password_service, request_kwargs):
+              client: TestClient, settings: Settings,
+              password_service, request_kwargs, asserts_token, asserts_response):
         self.primary_token = primary_token_str
         self.session_manager = session_manager
         self.client = client
         self.settings = settings
         self.password_service = password_service
-        self.asserts = Asserts.from_settings(settings)
+        self.asserts_token = asserts_token
+        self.asserts_response = asserts_response
         request_kwargs["url"] = "/users/"
+        self.request_kwargs = request_kwargs
         yield
 
 
     @pytest.mark.asyncio
-    async def test_with_valid_data_should_success(self, request_kwargs: dict):
+    async def test_with_valid_data_should_success(self):
         request = self.get_valid_request_data()
-        request_kwargs.update(json=request)
-        response = self.client.post(**request_kwargs)
+        self.request_kwargs.update(json=request)
+        response = self.client.post(**self.request_kwargs)
 
         assert response.status_code == 201
         body = response.json()
@@ -49,23 +52,23 @@ class TestCreateUserRequest:
             assert len(users) == 1
             user = users[0]
 
-            self.asserts.assert_token(user.id, access_token, "access")
-            self.asserts.assert_token(user.id, refresh_token, "refresh")
+            self.asserts_token.assert_token(user.id, access_token, "access")
+            self.asserts_token.assert_token(user.id, refresh_token, "refresh")
 
 
     @pytest.mark.asyncio
-    async def test_double_request_should_create_should_fail(self, request_kwargs: dict):
+    async def test_double_request_should_create_should_fail(self):
         request = self.get_valid_request_data()
-        request_kwargs.update(json=request)
-        response1 = self.client.post(**request_kwargs)
-        response2 = self.client.post(**request_kwargs)
+        self.request_kwargs.update(json=request)
+        response1 = self.client.post(**self.request_kwargs)
+        response2 = self.client.post(**self.request_kwargs)
 
         assert response1.status_code == 201
-        assert response2.status_code == 400
+        self.asserts_response.assert_error_response(response2, 400)
 
 
     @pytest.mark.asyncio
-    async def test_with_existing_login_should_fail(self, request_kwargs: dict):
+    async def test_with_existing_login_should_fail(self):
         request = self.get_valid_request_data()
 
         async with self.session_manager.start_with_commit() as session_manager:
@@ -74,30 +77,30 @@ class TestCreateUserRequest:
             user = User(**user_kwargs)
             await session_manager.users.save(user)
 
-        request_kwargs.update(json=request)
-        response = self.client.post(**request_kwargs)
+        self.request_kwargs.update(json=request)
+        response = self.client.post(**self.request_kwargs)
 
-        self.asserts.assert_error_response(response, 400)
-
-
-    @pytest.mark.asyncio
-    async def test_with_missing_api_key_should_fail(self, request_kwargs: dict):
-        request = self.get_valid_request_data()
-        request_kwargs.pop("headers")
-        request_kwargs.update(json=request)
-        response = self.client.post(**request_kwargs)
-
-        self.asserts.assert_error_response(response, 403)
+        self.asserts_response.assert_error_response(response, 400)
 
 
     @pytest.mark.asyncio
-    async def test_with_invalid_api_key_should_fail(self, request_kwargs: dict):
+    async def test_with_missing_api_key_should_fail(self):
         request = self.get_valid_request_data()
-        request_kwargs["headers"]["X-Api-Key"] = "invalid"
-        request_kwargs.update(json=request)
-        response = self.client.post(**request_kwargs)
+        self.request_kwargs.pop("headers")
+        self.request_kwargs.update(json=request)
+        response = self.client.post(**self.request_kwargs)
 
-        self.asserts.assert_error_response(response, 401)
+        self.asserts_response.assert_error_response(response, 403)
+
+
+    @pytest.mark.asyncio
+    async def test_with_invalid_api_key_should_fail(self):
+        request = self.get_valid_request_data()
+        self.request_kwargs["headers"]["X-Api-Key"] = "invalid"
+        self.request_kwargs.update(json=request)
+        response = self.client.post(**self.request_kwargs)
+
+        self.asserts_response.assert_error_response(response, 401)
 
 
     @pytest.mark.parametrize("invalid_request",
@@ -112,29 +115,11 @@ class TestCreateUserRequest:
         {"last_name": "last"}, {"second_name": "second"}, {"login": "test", "password": "<PASSWORD>"},
     ])
     @pytest.mark.asyncio
-    async def test_with_invalid_request_should_fail(self, request_kwargs: dict, invalid_request: dict):
-        request_kwargs.update(json=invalid_request)
-        response = self.client.post(**request_kwargs)
+    async def test_with_invalid_request_should_fail(self, invalid_request: dict):
+        self.request_kwargs.update(json=invalid_request)
+        response = self.client.post(**self.request_kwargs)
 
-        self.asserts.assert_error_response(response, 422)
-
-
-    def assert_token(self, user_id, token, type: str):
-        payload = jwt.decode(token,
-                             self.settings.SECRET_KEY,
-                             algorithms=[self.settings.ALGORITHM])
-        assert payload["user_id"] == user_id
-        assert payload["type"] == type
-
-        if type == "access":
-            expired_timedelta = timedelta(minutes=self.settings.ACCESS_TOKEN_EXPIRE_MINUTES)
-        elif type == "refresh":
-            expired_timedelta = timedelta(hours=self.settings.REFRESH_TOKEN_EXPIRE_HOURS)
-        else:
-            raise RuntimeError(f"Unknown token type: {type}")
-
-        exp = to_utc(datetime.fromtimestamp(payload["exp"]))
-        assert exp >= utcnow() + expired_timedelta
+        self.asserts_response.assert_error_response(response, 422)
 
 
     def get_valid_request_data(self) -> dict:

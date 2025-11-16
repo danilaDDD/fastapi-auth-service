@@ -19,3 +19,7 @@ class BaseUserResponse(BaseModel):
 
 class CreateUserResponse(BaseUserResponse, BaseTokensResponse):
     pass
+
+
+class UserResponseEntity(BaseUserResponse):
+    pass

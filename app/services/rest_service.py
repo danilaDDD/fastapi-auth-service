@@ -4,9 +4,9 @@ from fastapi import Depends, HTTPException, status
 
 from app.models.models import User
 from app.schemes.requests.auth_requests import TokensRequest
-from app.schemes.requests.user_requests import CreateUserRequest
+from app.schemes.requests.user_requests import CreateUserRequest, PutUserRequest
 from app.schemes.responses.token_responses import TokensResponse
-from app.schemes.responses.user_responses import CreateUserResponse
+from app.schemes.responses.user_responses import CreateUserResponse, UserResponseEntity
 from app.schemes.schemes import Token
 from app.services import jwt_token_service
 from app.services.base import BaseDBService
@@ -42,6 +42,17 @@ class UserRestService(BaseDBService):
             resp_kwargs["access_token"], resp_kwargs["refresh_token"] = self.jwt_token_service.generate_tokens(saved_user.id)
 
             return CreateUserResponse(**resp_kwargs)
+
+
+    async def put_user(self, request: PutUserRequest, user_id: int) -> UserResponseEntity:
+
+        return UserResponseEntity(
+            id=user_id,
+            login=request.login,
+            first_name=request.first_name,
+            last_name=request.last_name,
+            second_name=request.second_name,
+        )
 
 
     async def __check_user_or_raise(self, login, hashed_password, session_manager):

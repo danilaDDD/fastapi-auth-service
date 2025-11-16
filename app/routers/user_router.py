@@ -5,10 +5,10 @@ from fastapi import APIRouter, Response, Depends
 from starlette import status
 
 from app.routers.base import get_response_modes
-from app.schemes.requests.user_requests import CreateUserRequest
+from app.schemes.requests.user_requests import CreateUserRequest, PutUserRequest
 from app.schemes.responses.error_responses import ServerErrorResponse, BadRequestResponse, UnauthorizedResponse, \
     ForbiddenResponse
-from app.schemes.responses.user_responses import CreateUserResponse
+from app.schemes.responses.user_responses import CreateUserResponse, UserResponseEntity
 from app.security.api_key import valid_primary_token
 from app.services.rest_service import get_user_rest_service, UserRestService
 
@@ -30,3 +30,20 @@ async def create_user(request_body: CreateUserRequest,
                       user_rest_service: UserRestService = Depends(get_user_rest_service)) -> CreateUserResponse:
     response.status_code = status.HTTP_201_CREATED
     return await user_rest_service.create_user(request_body)
+
+
+@user_router.put("/{id}/",
+                 responses={
+                     status.HTTP_200_OK: {
+                         "model": UserResponseEntity,
+                         "description": "User update successfully."
+                     }
+                 })
+async def edit_user(request: PutUserRequest, id: int,
+                    response: Response,
+                    api_key: str = Depends(valid_primary_token),
+                    user_rest_service: UserRestService = Depends(get_user_rest_service)) -> UserResponseEntity:
+
+    return await user_rest_service.put_user(request, id)
+
+

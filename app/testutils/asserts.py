@@ -6,7 +6,7 @@ import jwt
 from app.utils.datetime_utils import utcnow, to_utc
 
 
-class Asserts:
+class AssertsToken:
     @classmethod
     def from_settings(cls, settings):
         return cls(
@@ -43,6 +43,8 @@ class Asserts:
         exp = to_utc(datetime.fromtimestamp(payload["exp"]))
         assert exp >= utcnow() + expired_timedelta
 
+
+class AssertsResponse:
     def assert_error_response(self, response: Response, expected_status_code):
         assert response.status_code == expected_status_code
         assert len(response.json()["detail"]) > 0
