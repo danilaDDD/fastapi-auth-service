@@ -48,3 +48,8 @@ class AssertsResponse:
     def assert_error_response(self, response: Response, expected_status_code):
         assert response.status_code == expected_status_code
         assert len(response.json()["detail"]) > 0
+
+
+    def assert_bad_request(self, response: Response):
+        assert response.status_code in (400, 422)
+        assert len(response.json()["detail"]) > 0

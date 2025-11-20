@@ -17,6 +17,3 @@ class AbsId(Base):
 
 class AbsCreated(Base):
     __abstract__ = True
-
-    created_at = Column(DateTime, server_default=utcnow(), nullable=False, index=True)
-    updated_at = Column(DateTime, server_default=utcnow(), onupdate=utcnow(), nullable=False, index=True)

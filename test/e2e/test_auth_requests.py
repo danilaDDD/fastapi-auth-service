@@ -172,8 +172,7 @@ class TestRefreshAccessToken:
         self.request_kwargs.update(json=invalid_request)
         response = self.client.post(**self.request_kwargs)
 
-        assert  response.status_code in (400, 422)
-        assert len(response.json()["detail"]) > 0
+        self.asserts_response.assert_bad_request(response)
 
     async def save_user(self) -> int:
         async with self.session_manager.start_with_commit() as session_manager:

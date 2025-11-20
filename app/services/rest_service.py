@@ -45,14 +45,30 @@ class UserRestService(BaseDBService):
 
 
     async def put_user(self, request: PutUserRequest, user_id: int) -> UserResponseEntity:
+        async with self.session_manager.start_with_commit() as session_manager:
+            source_user = await session_manager.users.find_by_id(user_id)
 
-        return UserResponseEntity(
-            id=user_id,
-            login=request.login,
-            first_name=request.first_name,
-            last_name=request.last_name,
-            second_name=request.second_name,
-        )
+            if source_user is None:
+                raise HTTPException(status_code=404, detail="User not found")
+
+            request_items = request.model_dump().items()
+
+            if len(request_items) == 0:
+                raise HTTPException(status_code=400, detail="empty request body")
+
+            for attr, req_value in request_items:
+                if req_value:
+                    setattr(source_user, attr, req_value)
+
+            saved_user = await session_manager.users.save(source_user)
+
+            return UserResponseEntity(
+                id=saved_user.id,
+                login=saved_user.login,
+                first_name=saved_user.first_name,
+                second_name=saved_user.second_name,
+                last_name=saved_user.last_name,
+            )
 
 
     async def __check_user_or_raise(self, login, hashed_password, session_manager):

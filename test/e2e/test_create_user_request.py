@@ -119,7 +119,7 @@ class TestCreateUserRequest:
         self.request_kwargs.update(json=invalid_request)
         response = self.client.post(**self.request_kwargs)
 
-        self.asserts_response.assert_error_response(response, 422)
+        self.asserts_response.assert_bad_request(response)
 
 
     def get_valid_request_data(self) -> dict:

@@ -18,3 +18,8 @@ class UserRepository(BaseRepository):
     async def find_by_login(self, login: str) -> Sequence[User]:
         stmt = self.select().where(self.model.login == login)
         return await self.get_list(stmt)
+
+
+    async def find_by_id(self, id: int) -> User | None:
+        stmt = self.select().where(self.model.id == id)
+        return await self.get_one_or_none(stmt)
