@@ -5,6 +5,7 @@ from app.testutils.asserts import AssertsToken
 from app.testutils.user_utils import UserGenerator
 
 
+@pytest.mark.e2e
 class TestGetAccessToken:
     @pytest.fixture(autouse=True, scope="function")
     def setup(self, client, session_manager, primary_token_str, password_service,
@@ -94,7 +95,7 @@ class TestGetAccessToken:
         return {"login": "testuser", "password": "TestPassword123!"}
 
 
-
+@pytest.mark.e2e
 class TestRefreshAccessToken:
     @pytest.fixture(autouse=True, scope="function")
     def setup(self, client, session_manager, primary_token_str,

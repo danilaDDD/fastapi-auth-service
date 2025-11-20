@@ -5,6 +5,7 @@ from app.testutils.user_utils import UserGenerator
 from db.session_manager import SessionManager
 
 
+@pytest.mark.e2e
 class TestFindAllUsersRequest:
     @pytest.fixture(autouse=True, scope="function")
     def setup(self, client: TestClient, session_manager: SessionManager,

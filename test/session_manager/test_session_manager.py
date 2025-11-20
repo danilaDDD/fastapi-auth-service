@@ -2,7 +2,8 @@ import pytest
 from app.testutils.user_utils import UserGenerator
 from db.session_manager import SessionManager
 
-
+@pytest.mark.db
+@pytest.mark.unit
 class TestSessionManager:
 
     @pytest.mark.asyncio

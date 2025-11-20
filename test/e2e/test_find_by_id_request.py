@@ -5,6 +5,7 @@ from app.testutils.user_utils import UserGenerator
 from db.session_manager import SessionManager
 
 
+@pytest.mark.e2e
 class TestFindByIdRequest:
     URL = "/users/%d/"
 

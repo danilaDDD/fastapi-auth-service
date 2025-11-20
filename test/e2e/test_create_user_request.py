@@ -1,16 +1,12 @@
-from datetime import timedelta, datetime
-
-import jwt
 import pytest
 from starlette.testclient import TestClient
 
 from app.models.models import User
-from app.testutils.asserts import AssertsToken
-from app.utils.datetime_utils import utcnow, to_utc
 from db.session_manager import SessionManager
 from settings.settings import Settings
 
 
+@pytest.mark.e2e
 class TestCreateUserRequest:
 
     @pytest.fixture(scope="function", autouse=True)

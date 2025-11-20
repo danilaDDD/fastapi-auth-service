@@ -7,6 +7,7 @@ from app.repositories.user_repository import UserRepository
 from app.testutils.user_utils import UserGenerator
 
 
+@pytest.mark.db
 class TestUserRepository:
     @classmethod
     def assert_user(cls, source_user: User, saved_user: User):
