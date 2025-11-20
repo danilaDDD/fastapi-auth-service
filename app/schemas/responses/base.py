@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from app.schemes.schemes import Token
+from app.schemas.schemas import Token
 
 
 class BaseTokensResponse(BaseModel):

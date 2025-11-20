@@ -6,7 +6,7 @@ from datetime import     timedelta
 from fastapi import Depends
 from jwt import InvalidTokenError
 
-from app.schemes.schemes import Token
+from app.schemas.schemas import Token
 from app.utils.datetime_utils import utcnow
 from settings.settings import Settings, load_settings
 

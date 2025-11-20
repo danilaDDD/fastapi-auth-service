@@ -1,8 +1,7 @@
 from pydantic import BaseModel, ConfigDict
 
 from app.models.models import User
-from app.schemes.responses.base import BaseTokensResponse
-from app.schemes.schemes import Token
+from app.schemas.responses.base import BaseTokensResponse
 
 
 class BaseUserResponse(BaseModel):

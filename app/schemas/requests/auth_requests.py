@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 
-from app.schemes.requests.base import BaseAuthRequest
+from app.schemas.requests.base import BaseAuthRequest
 
 
 class TokensRequest(BaseAuthRequest):

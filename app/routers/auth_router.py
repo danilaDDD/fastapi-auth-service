@@ -1,9 +1,9 @@
 from fastapi import APIRouter, status, Response, Depends, HTTPException
 from jwt import DecodeError
 
-from app.schemes.requests.auth_requests import TokensRequest, RefreshTokensRequest
-from app.schemes.responses.token_responses import TokensResponse
-from app.schemes.schemes import Token
+from app.schemas.requests.auth_requests import TokensRequest, RefreshTokensRequest
+from app.schemas.responses.token_responses import TokensResponse
+from app.schemas.schemas import Token
 from app.security.api_key import valid_primary_token
 from app.services.rest_service import get_tokens_rest_service, TokensRestService
 from app.utils.datetime_utils import utcnow

@@ -1,6 +1,6 @@
 from fastapi import status
 
-from app.schemes.responses import error_responses
+from app.schemas.responses import error_responses
 
 def get_response_modes(added_responses: dict = None) -> dict:
 

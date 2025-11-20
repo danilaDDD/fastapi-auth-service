@@ -1,14 +1,11 @@
-from datetime import datetime, timedelta
-
 from fastapi import Depends, HTTPException, status
 
 from app.models.models import User
-from app.schemes.requests.auth_requests import TokensRequest
-from app.schemes.requests.user_requests import CreateUserRequest, PutUserRequest
-from app.schemes.responses.token_responses import TokensResponse
-from app.schemes.responses.user_responses import CreateUserResponse, UserResponseEntity
-from app.schemes.schemes import Token
-from app.services import jwt_token_service
+from app.schemas.requests.auth_requests import TokensRequest
+from app.schemas.requests.user_requests import CreateUserRequest, PutUserRequest
+from app.schemas.responses.token_responses import TokensResponse
+from app.schemas.responses.user_responses import CreateUserResponse, UserResponseEntity
+from app.schemas.schemas import Token
 from app.services.base import BaseDBService
 from app.services.jwt_token_service import JWTTokenService, get_jwt_token_service
 from app.services.password_service import get_password_service, PasswordService
