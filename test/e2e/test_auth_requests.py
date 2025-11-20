@@ -50,7 +50,7 @@ class TestGetAccessToken:
 
 
     @pytest.mark.asyncio
-    async def test_without_primary_token_should_fail(self):
+    async def test_without_primary_token_should_return_403(self):
         request = self.get_request_body()
         self.request_kwargs["headers"].pop("X-Api-Key")
         self.request_kwargs.update(json=request)
@@ -61,7 +61,7 @@ class TestGetAccessToken:
 
 
     @pytest.mark.asyncio
-    async def test_with_invalid_password_should_fail(self):
+    async def test_with_invalid_password_should_return_401(self):
         request = self.get_request_body()
         hashed_another_password = self.password_service.hashed("AnotherPassword!")
 
@@ -81,7 +81,7 @@ class TestGetAccessToken:
 
 
     @pytest.mark.asyncio
-    async def test_with_nonexistent_user_should_fail(self):
+    async def test_with_nonexistent_user_should_return_401(self):
         request = self.get_request_body()
 
         self.request_kwargs.update(json=request)
@@ -92,6 +92,7 @@ class TestGetAccessToken:
     @classmethod
     def get_request_body(cls) -> dict:
         return {"login": "testuser", "password": "TestPassword123!"}
+
 
 
 class TestRefreshAccessToken:
@@ -135,7 +136,7 @@ class TestRefreshAccessToken:
 
 
     @pytest.mark.asyncio
-    async def test_with_invalid_primary_token_should_fail(self):
+    async def test_with_invalid_primary_token_should_return_403(self):
         user_id = await self.save_user()
 
         tokens = self.jwt_token_service.generate_tokens(user_id)
@@ -150,7 +151,7 @@ class TestRefreshAccessToken:
 
 
     @pytest.mark.asyncio
-    async def test_with_invalid_refresh_token_should_fail(self):
+    async def test_with_invalid_refresh_token_should_return_400(self):
         request = {"refresh_token": "invalidtoken"}
         self.request_kwargs.update(json=request)
         response = self.client.post(**self.request_kwargs)
@@ -168,7 +169,7 @@ class TestRefreshAccessToken:
         {"invalid_field": "some_value"}
     ]
                              )
-    async def test_with_invalid_body_should_fail(self, invalid_request):
+    async def test_with_invalid_body_should_return_400_or_422(self, invalid_request):
         self.request_kwargs.update(json=invalid_request)
         response = self.client.post(**self.request_kwargs)
 

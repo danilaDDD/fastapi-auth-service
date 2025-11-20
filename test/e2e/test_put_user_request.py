@@ -12,11 +12,10 @@ class TestPutUserRequest:
 
     @pytest.fixture(autouse=True, scope="function")
     def setup(self, client: TestClient, session_manager: SessionManager,
-              request_kwargs, asserts_token, asserts_response):
+              request_kwargs, asserts_response):
         self.client = client
         self.session_manager = session_manager
         self.request_kwargs = request_kwargs
-        self.asserts_token = asserts_token
         self.asserts_response = asserts_response
         yield
 
@@ -33,8 +32,8 @@ class TestPutUserRequest:
     ])
     async def test_with_valid_request_should_success(self, json: dict):
         user_id = await self.save_user()
+        self.set_url(user_id)
 
-        self.request_kwargs["url"] = self.URL % user_id
         self.request_kwargs.update(json=json)
         response = self.client.put(**self.request_kwargs)
 
@@ -52,7 +51,7 @@ class TestPutUserRequest:
 
     @pytest.mark.asyncio
     async def test_with_invalid_user_id_should_return_404(self):
-        self.request_kwargs["url"] = self.URL % 9999
+        self.set_url(9999)
         self.request_kwargs.update(json={"login": "new_login"})
         response = self.client.put(**self.request_kwargs)
 
@@ -86,7 +85,7 @@ class TestPutUserRequest:
     async def test_with_invalid_body_should_return_422_or_400(self, invalid_json: dict):
         user_id = await self.save_user()
 
-        self.request_kwargs["url"] = self.URL % user_id
+        self.set_url(user_id)
         self.request_kwargs.update(json=invalid_json)
         response = self.client.put(**self.request_kwargs)
 
@@ -100,5 +99,8 @@ class TestPutUserRequest:
             user_id = saved_user.id
 
         return user_id
+
+    def set_url(self, user_id):
+        self.request_kwargs["url"] = self.URL % user_id
 
 

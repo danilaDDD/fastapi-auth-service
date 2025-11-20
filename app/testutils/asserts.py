@@ -53,3 +53,12 @@ class AssertsResponse:
     def assert_bad_request(self, response: Response):
         assert response.status_code in (400, 422)
         assert len(response.json()["detail"]) > 0
+
+
+    def assert_user_body(self, response: Response, user_id: int):
+        body = response.json()
+
+        assert body["id"] == user_id
+        keys = ["login", "first_name", "last_name", "second_name"]
+        for key in keys:
+            assert key in body

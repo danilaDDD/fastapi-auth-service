@@ -40,10 +40,34 @@ async def create_user(request_body: CreateUserRequest,
                      }
                  })
 async def edit_user(request: PutUserRequest, id: int,
-                    response: Response,
                     api_key: str = Depends(valid_primary_token),
                     user_rest_service: UserRestService = Depends(get_user_rest_service)) -> UserResponseEntity:
 
     return await user_rest_service.put_user(request, id)
+
+
+@user_router.get("/{id}/",
+                 responses={
+                     status.HTTP_200_OK: {
+                         "model": UserResponseEntity,
+                         "description": "User retrieved successfully."
+                     }
+                 })
+async def get_user(id: int,
+                   api_key: str = Depends(valid_primary_token),
+                   user_rest_service: UserRestService = Depends(get_user_rest_service)) -> UserResponseEntity:
+    return await user_rest_service.find_user_by_id(id)
+
+
+@user_router.get("/",
+                 responses={
+                     status.HTTP_200_OK: {
+                         "model": list[UserResponseEntity],
+                         "description": "Users retrieved successfully."
+                     }
+                 })
+async def get_all_users(api_key: str = Depends(valid_primary_token),
+                            user_rest_service: UserRestService = Depends(get_user_rest_service)) -> list[UserResponseEntity]:
+    return await user_rest_service.find_all_users()
 
 

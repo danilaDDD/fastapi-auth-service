@@ -62,13 +62,17 @@ class UserRestService(BaseDBService):
 
             saved_user = await session_manager.users.save(source_user)
 
-            return UserResponseEntity(
-                id=saved_user.id,
-                login=saved_user.login,
-                first_name=saved_user.first_name,
-                second_name=saved_user.second_name,
-                last_name=saved_user.last_name,
-            )
+            return UserResponseEntity.of_user(saved_user)
+
+
+    async def find_user_by_id(self, user_id: int) -> UserResponseEntity:
+        async with self.session_manager.start_without_commit() as session_manager:
+            user = await session_manager.users.find_by_id(user_id)
+
+            if user is None:
+                raise HTTPException(status_code=404, detail="User not found")
+
+            return UserResponseEntity.of_user(user)
 
 
     async def __check_user_or_raise(self, login, hashed_password, session_manager):
@@ -86,6 +90,13 @@ class UserRestService(BaseDBService):
         del user_kwargs["password"]
         user_kwargs["hashed_password"] = hashed_password
         return User(**user_kwargs)
+
+
+    async def find_all_users(self) -> list[UserResponseEntity]:
+        async with self.session_manager.start_without_commit() as session_manager:
+            users = await session_manager.users.get_all()
+            return [UserResponseEntity.of_user(u) for u in users]
+
 
 
 def get_user_rest_service(
