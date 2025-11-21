@@ -5,7 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="43b89f8b-4ef4-42b7-bfde-3f40e41196fc" name="Changes" comment="add pytest.ini and markers to tests">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/logs/error.log" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -213,7 +213,7 @@
       <workItem from="1763212415574" duration="10506000" />
       <workItem from="1763299402767" duration="8567000" />
       <workItem from="1763648230121" duration="8474000" />
-      <workItem from="1763743920954" duration="351000" />
+      <workItem from="1763743920954" duration="850000" />
     </task>
     <task id="LOCAL-00001" summary="add create user request ui">
       <option name="closed" value="true" />
@@ -435,7 +435,7 @@
     <SUITE FILE_PATH="coverage/users_api$pytest_for_test_create_user_request_TestCreateUserRequest_test_with_invalid_request_should_fail.coverage" NAME="pytest for test_create_user_request.TestCreateUserRequest.test_with_invalid_request_should_fail Coverage Results" MODIFIED="1762989710715" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test/e2e" />
     <SUITE FILE_PATH="coverage/users_api$pytest_for_test_user_requests_TestCreateUser.coverage" NAME="pytest for test_user_requests.TestCreateUser Coverage Results" MODIFIED="1762650279088" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test/e2e" />
     <SUITE FILE_PATH="coverage/users_api$pytest_for_test_put_user_request_TestPutUserRequest_test_with_invalid_body_should_return_422_or_400.coverage" NAME="pytest for test_put_user_request.TestPutUserRequest.test_with_invalid_body_should_return_422_or_400 Coverage Results" MODIFIED="1763650295299" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test/e2e" />
-    <SUITE FILE_PATH="coverage/users_api$users_api.coverage" NAME="users-api Coverage Results" MODIFIED="1763654838946" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/users_api$users_api.coverage" NAME="users-api Coverage Results" MODIFIED="1763744546224" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
     <SUITE FILE_PATH="coverage/users_api$test.coverage" NAME="test Coverage Results" MODIFIED="1763650244168" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test/e2e" />
     <SUITE FILE_PATH="coverage/users_api$pytest_for_test_user_requests_TestCreateUser_test_create_user_should_success.coverage" NAME="pytest for test_user_requests.TestCreateUser.test_create_user_should_success Coverage Results" MODIFIED="1762647295788" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test/e2e" />
   </component>
