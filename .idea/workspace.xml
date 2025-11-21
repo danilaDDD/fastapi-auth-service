@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="43b89f8b-4ef4-42b7-bfde-3f40e41196fc" name="Changes" comment="add pytest.ini and markers to tests">
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="FastAPI main" />
+        <option value="FastAPI test_main" />
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;danilaDDD&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/danilaDDD/fastapi-auth-service.git&quot;,
+    &quot;accountId&quot;: &quot;90afd2eb-2818-4b39-be7a-955e5f04e890&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 6
+}</component>
+  <component name="ProjectId" id="357MI5ST2zTBhmnM62X7pcij61Z" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;FastAPI.users-api.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.pytest for test_create_user_request.TestCreateUserRequest.test_with_invalid_request_should_fail.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.pytest for test_put_user_request.TestPutUserRequest.test_with_invalid_body_should_return_422_or_400.executor&quot;: &quot;Debug&quot;,
+    &quot;Python tests.pytest for test_user_requests.TestCreateUser.executor&quot;: &quot;Debug&quot;,
+    &quot;Python tests.pytest for test_user_requests.TestCreateUser.test_create_user_should_success.executor&quot;: &quot;Run&quot;,
+    &quot;Python tests.test.executor&quot;: &quot;Debug&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;postgresql&quot;
+    ]
+  }
+}</component>
+  <component name="RunManager" selected="FastAPI.users-api">
+    <configuration name="users-api" type="Python.FastAPI">
+      <option name="file" value="$PROJECT_DIR$/app/main.py" />
+      <module name="users-api" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="$USER_HOME$/miniconda3/envs/auth_service/bin/python" />
+      <option name="SDK_NAME" value="auth_service" />
+      <option name="WORKING_DIRECTORY" value="" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="launchJavascriptDebuger" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest for test" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="users-api" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test/e2e" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_parameters" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest for test_create_user_request.TestCreateUserRequest.test_with_invalid_request_should_fail" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="users-api" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test/e2e" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_parameters" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_create_user_request.TestCreateUserRequest.test_with_invalid_request_should_fail&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest for test.e2e.test_create_user_request.TestCreateUserRequest" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="users-api" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test/e2e" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_parameters" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test.e2e.test_create_user_request.TestCreateUserRequest&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="pytest for test_put_user_request.TestPutUserRequest.test_with_invalid_body_should_return_422_or_400" type="tests" factoryName="py.test" temporary="true" nameIsGenerated="true">
+      <module name="users-api" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test/e2e" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_parameters" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_put_user_request.TestPutUserRequest.test_with_invalid_body_should_return_422_or_400&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <configuration name="test" type="tests" factoryName="py.test">
+      <module name="users-api" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test/e2e" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="_new_keywords" value="&quot;&quot;" />
+      <option name="_new_parameters" value="&quot;&quot;" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python tests.pytest for test_put_user_request.TestPutUserRequest.test_with_invalid_body_should_return_422_or_400" />
+        <item itemvalue="Python tests.pytest for test_create_user_request.TestCreateUserRequest.test_with_invalid_request_should_fail" />
+        <item itemvalue="Python tests.pytest for test.e2e.test_create_user_request.TestCreateUserRequest" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-js-predefined-d6986cc7102b-1632447f56bf-JavaScript-PY-243.26574.90" />
+        <option value="bundled-python-sdk-c1fac28bca04-4df51de95216-com.jetbrains.pycharm.pro.sharedIndexes.bundled-PY-243.26574.90" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="43b89f8b-4ef4-42b7-bfde-3f40e41196fc" name="Changes" comment="" />
+      <created>1762456573551</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1762456573551</updated>
+      <workItem from="1762456574626" duration="848000" />
+      <workItem from="1762521882115" duration="6515000" />
+      <workItem from="1762529830561" duration="73000" />
+      <workItem from="1762618219472" duration="232000" />
+      <workItem from="1762637253787" duration="15221000" />
+      <workItem from="1762663918360" duration="923000" />
+      <workItem from="1762868953509" duration="7582000" />
+      <workItem from="1762902457903" duration="604000" />
+      <workItem from="1762954884741" duration="407000" />
+      <workItem from="1762955312816" duration="4175000" />
+      <workItem from="1762987571086" duration="19636000" />
+      <workItem from="1763212415574" duration="10506000" />
+      <workItem from="1763299402767" duration="8567000" />
+      <workItem from="1763648230121" duration="8474000" />
+      <workItem from="1763743920954" duration="351000" />
+    </task>
+    <task id="LOCAL-00001" summary="add create user request ui">
+      <option name="closed" value="true" />
+      <created>1762457372946</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1762457372946</updated>
+    </task>
+    <task id="LOCAL-00002" summary="fix create user request swagger">
+      <option name="closed" value="true" />
+      <created>1762529506300</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1762529506300</updated>
+    </task>
+    <task id="LOCAL-00003" summary="add check primary token">
+      <option name="closed" value="true" />
+      <created>1762956037807</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1762956037807</updated>
+    </task>
+    <task id="LOCAL-00004" summary="add test create user request">
+      <option name="closed" value="true" />
+      <created>1762956141951</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1762956141951</updated>
+    </task>
+    <task id="LOCAL-00005" summary="fix session_manager tests">
+      <option name="closed" value="true" />
+      <created>1762956199644</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1762956199644</updated>
+    </task>
+    <task id="LOCAL-00006" summary="perform create user request">
+      <option name="closed" value="true" />
+      <created>1762956293443</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1762956293443</updated>
+    </task>
+    <task id="LOCAL-00007" summary="add tests for create user request">
+      <option name="closed" value="true" />
+      <created>1762992806340</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1762992806340</updated>
+    </task>
+    <task id="LOCAL-00008" summary="add error logger and add aiologger to requirements.txt">
+      <option name="closed" value="true" />
+      <created>1762996240563</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1762996240564</updated>
+    </task>
+    <task id="LOCAL-00009" summary="add get tokens request with e2e tests">
+      <option name="closed" value="true" />
+      <created>1763008594416</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1763008594416</updated>
+    </task>
+    <task id="LOCAL-00010" summary="add refresh token request">
+      <option name="closed" value="true" />
+      <created>1763012021242</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1763012021242</updated>
+    </task>
+    <task id="LOCAL-00011" summary="fix tokens/refresh with invalid json and tests for it">
+      <option name="closed" value="true" />
+      <created>1763216988039</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1763216988039</updated>
+    </task>
+    <task id="LOCAL-00012" summary="fix logger for test env">
+      <option name="closed" value="true" />
+      <created>1763217004981</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1763217004981</updated>
+    </task>
+    <task id="LOCAL-00013" summary="fix initial logger in main.py">
+      <option name="closed" value="true" />
+      <created>1763217182002</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1763217182002</updated>
+    </task>
+    <task id="LOCAL-00014" summary="refactor e2e tests">
+      <option name="closed" value="true" />
+      <created>1763221793795</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1763221793795</updated>
+    </task>
+    <task id="LOCAL-00015" summary="fix logging_middleware.py">
+      <option name="closed" value="true" />
+      <created>1763221814371</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1763221814371</updated>
+    </task>
+    <task id="LOCAL-00016" summary="refactor all tests">
+      <option name="closed" value="true" />
+      <created>1763301970808</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1763301970808</updated>
+    </task>
+    <task id="LOCAL-00017" summary="add put user request with tests">
+      <option name="closed" value="true" />
+      <created>1763650516403</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1763650516403</updated>
+    </task>
+    <task id="LOCAL-00018" summary="add find_all_users_request with tests and find_user_by_id_request with tests">
+      <option name="closed" value="true" />
+      <created>1763654824666</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1763654824666</updated>
+    </task>
+    <task id="LOCAL-00019" summary="refactor schemes packege to schemas&#10;and schemas/schemes.py to schemas.py">
+      <option name="closed" value="true" />
+      <created>1763655382194</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1763655382195</updated>
+    </task>
+    <task id="LOCAL-00020" summary="add pytest-cov">
+      <option name="closed" value="true" />
+      <created>1763656053204</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1763656053204</updated>
+    </task>
+    <task id="LOCAL-00021" summary="add pytest.ini and markers to tests">
+      <option name="closed" value="true" />
+      <created>1763657578258</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1763657578259</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add create user request ui" />
+    <MESSAGE value="fix create user request swagger" />
+    <MESSAGE value="add check primary token" />
+    <MESSAGE value="add test create user request" />
+    <MESSAGE value="fix session_manager tests" />
+    <MESSAGE value="perform create user request" />
+    <MESSAGE value="add tests for create user request" />
+    <MESSAGE value="add error logger and add aiologger to requirements.txt" />
+    <MESSAGE value="add get tokens request with e2e tests" />
+    <MESSAGE value="add refresh token request" />
+    <MESSAGE value="fix tokens/refresh with invalid json and tests for it" />
+    <MESSAGE value="fix logger for test env" />
+    <MESSAGE value="fix initial logger in main.py" />
+    <MESSAGE value="refactor e2e tests" />
+    <MESSAGE value="fix logging_middleware.py" />
+    <MESSAGE value="refactor all tests" />
+    <MESSAGE value="add put user request with tests" />
+    <MESSAGE value="add find_all_users_request with tests and find_user_by_id_request with tests" />
+    <MESSAGE value="refactor schemes packege to schemas&#10;and schemas/schemes.py to schemas.py" />
+    <MESSAGE value="add pytest-cov" />
+    <MESSAGE value="add pytest.ini and markers to tests" />
+    <option name="LAST_COMMIT_MESSAGE" value="add pytest.ini and markers to tests" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/app/services/jwt_token_service.py</url>
+          <line>61</line>
+          <option name="timeStamp" value="5" />
+        </line-breakpoint>
+      </breakpoints>
+      <default-breakpoints>
+        <breakpoint type="python-exception">
+          <properties notifyOnTerminate="true" exception="BaseException">
+            <option name="notifyOnTerminate" value="true" />
+          </properties>
+        </breakpoint>
+      </default-breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/users_api$pytest_for_test_create_user_request_TestCreateUserRequest_test_with_invalid_request_should_fail.coverage" NAME="pytest for test_create_user_request.TestCreateUserRequest.test_with_invalid_request_should_fail Coverage Results" MODIFIED="1762989710715" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test/e2e" />
+    <SUITE FILE_PATH="coverage/users_api$pytest_for_test_user_requests_TestCreateUser.coverage" NAME="pytest for test_user_requests.TestCreateUser Coverage Results" MODIFIED="1762650279088" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test/e2e" />
+    <SUITE FILE_PATH="coverage/users_api$pytest_for_test_put_user_request_TestPutUserRequest_test_with_invalid_body_should_return_422_or_400.coverage" NAME="pytest for test_put_user_request.TestPutUserRequest.test_with_invalid_body_should_return_422_or_400 Coverage Results" MODIFIED="1763650295299" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test/e2e" />
+    <SUITE FILE_PATH="coverage/users_api$users_api.coverage" NAME="users-api Coverage Results" MODIFIED="1763654838946" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="" />
+    <SUITE FILE_PATH="coverage/users_api$test.coverage" NAME="test Coverage Results" MODIFIED="1763650244168" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test/e2e" />
+    <SUITE FILE_PATH="coverage/users_api$pytest_for_test_user_requests_TestCreateUser_test_create_user_should_success.coverage" NAME="pytest for test_user_requests.TestCreateUser.test_create_user_should_success Coverage Results" MODIFIED="1762647295788" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/test/e2e" />
+  </component>
+</project>
