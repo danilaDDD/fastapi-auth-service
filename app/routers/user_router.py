@@ -9,7 +9,7 @@ from app.schemas.requests.user_requests import CreateUserRequest, PutUserRequest
 from app.schemas.responses.error_responses import ServerErrorResponse, BadRequestResponse, UnauthorizedResponse, \
     ForbiddenResponse
 from app.schemas.responses.user_responses import CreateUserResponse, UserResponseEntity
-from app.security.api_key import valid_primary_token
+from app.security.security import valid_primary_token
 from app.services.rest_service import get_user_rest_service, UserRestService
 
 user_router = APIRouter(
